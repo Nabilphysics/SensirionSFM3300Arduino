@@ -12,6 +12,11 @@
 
 SFM3300 sensirionFlow(64);
 //Left to Right- VDD,SCL(A5),GND,SDA(A4)
+// Sensor Connection: 
+// Sensor Power > sensorPowerPin or Transistor Switch, 
+// Data > SDA 
+// Clock > SCK
+// GND > GND
 long int sensirion3300Offset = 32768; // Offset for Sensirion 3300 Flow Sensor
 float scaleFactor = 120.0; //For Air
 uint8_t sensorPowerPin = 5; // Since Sensor only consume 5mw power we could power it from Microcontroller Pin, You may use Transistor Switching
@@ -35,11 +40,13 @@ void loop() {
   Serial.println(flow);
   delay(100);
 
-  if(flow < -270.00){
-  sensirionFlow.softReset(); 
+ if(flow < -270.00){
+  sensirionFlow.hardReset(sensorPowerPin);
+  delay(500); 
   sensirionFlow.init();
   delay(1000);
   }
+
 
   
 
