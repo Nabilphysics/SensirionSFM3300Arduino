@@ -1,4 +1,4 @@
-# SensirionSFM3000Arduino
+# SensirionSFM3300Arduino
 Sensirion SFM3300 Digital Gas Flow Meter Interfacing with Arduino
 
   Sensirion SFM3300 Flow Sensor interfacing
