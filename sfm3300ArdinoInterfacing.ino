@@ -13,7 +13,7 @@
 SFM3300 sensirionFlow(64);
 //Left to Right- VDD,SCL(A5),GND,SDA(A4)
 // Sensor Connection: 
-// Sensor Power > sensorPowerPin or Transistor Switch, 
+// Sensor Power > sensorPowerPin or Use This pin for transistor switcing(Trigger) to Deliver +5V
 // Data > SDA 
 // Clock > SCK
 // GND > GND
