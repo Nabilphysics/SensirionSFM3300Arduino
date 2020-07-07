@@ -18,10 +18,6 @@ void SFM3300::init()
   int a = 0;
   int b = 0;
   int c = 0; 
-  
- 
-  Wire.begin();
-  delay(1000);
   Wire.beginTransmission(byte(mI2cAddress)); // transmit to device with I2C mI2cAddress
   
   Wire.write(byte(0x10));      
@@ -29,6 +25,12 @@ void SFM3300::init()
   Wire.endTransmission();
   delay(5);
   
+    Wire.beginTransmission(byte(64));
+    Wire.write(0x10);
+    Wire.write(0x01);
+    Wire.endTransmission();
+    delay(5);
+    
   Wire.requestFrom(mI2cAddress, 3); //
   a = Wire.read(); // received first byte stored here
   b = Wire.read(); // received second byte stored here
@@ -36,18 +38,15 @@ void SFM3300::init()
 
   Wire.endTransmission();
   delay(5);
-  
-  Wire.requestFrom(mI2cAddress, 3); //
-  a = Wire.read(); // received  first byte stored here
-  b = Wire.read(); // received second byte stored here
-  c = Wire.read(); // received third byte stored here
-  Wire.endTransmission();
-  delay(5);
-  
+
 }
  
 float SFM3300::getvalue()
 {
+  Wire.beginTransmission(byte(64));
+  Wire.write(byte(0x10));      
+  Wire.write(byte(0x00)); 
+  Wire.endTransmission();
   Wire.requestFrom(mI2cAddress, 3); // set read 3 bytes from device with address 0x40
   uint16_t a = Wire.read(); // received first byte stored here. The variable "uint16_t" can hold 2 bytes, this will be relevant later
   uint8_t b = Wire.read(); // second received byte stored here
@@ -92,11 +91,11 @@ void SFM3300::hardReset(uint8_t sensorPowerPin)
     }
   } while (ret != 0);
   if(ret == 0){
-    Serial.println("Soft Reset Done");
+    Serial.println("Hard Reset Done");
   }
 }
 float SFM3300::tempRead(){
-  Wire.beginTransmission(byte(64));
+    Wire.beginTransmission(byte(64));
     Wire.write(0x10);
     Wire.write(0x01);
     Wire.endTransmission();
