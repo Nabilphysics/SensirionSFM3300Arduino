@@ -34,31 +34,25 @@ void setup() {
 }
 
 void loop() {
- /////////// Flow /////////////// 
+  /////////////// Flow Measure ///////////////
+
   unsigned int result = sensirionFlow.getvalue();
   float flow = (float(result) - sensirion3300Offset) / scaleFactor;
-  Serial.println(flow);
-  delay(100);
-
- if(flow < -270.00){
-  sensirionFlow.hardReset(sensorPowerPin);
-  delay(500); 
-  sensirionFlow.init();
-  delay(1000);
-  }
-
-
+  Serial.print(flow);
   
-
-/*
-////////////////// Temp /////////////
-unsigned int temp = sensirionFlow.tempRead();
-float actualTemp = (float(temp) - 20000)/100;
-  Serial.print("temp= ");
+////////////////// Temperature Measure /////////////
+  unsigned int temp = sensirionFlow.tempRead();
+  float actualTemp = (float(temp) - 20000) / 100;
+  Serial.print(" , ");
   Serial.println(actualTemp);
+  
   delay(100);
 
-  */
-  
+//////// Error Handling ////////////////////////////
+  if (flow < -270.00) {
+    sensirionFlow.hardReset(sensorPowerPin); //Sensor Power ON/OFF
+    sensirionFlow.init();
+    delay(1000);
+  }
 
 }
